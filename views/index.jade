@@ -1,0 +1,37 @@
+extends layout
+
+block content
+    .welcomeInfo.modal.fade
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type="button",data-dismiss="modal",aria-hidden="true") &times;
+                    .modal-title
+                        h4#welcomeTitle
+                .modal-body#welcomeInfoCanvas
+                    h4#welcomeIdTitle
+                    p
+                      | This map shows the percentage of houses that a person could afford based on annual salary. Each TTW (Travel To Work) area is colour coded according to the key displayed on the right. 
+                    p
+                      | You can input your own annual salary, use the median salary for each area and change the year using the settings on the left. Try the Scatter plot button and see what happens!
+                    p
+                      | Click once on any area of the map to zoom in!
+                    p
+                      | Click again on any small area to see a histogram of house prices in that area.
+                    p
+                      | Click Reset at any time to reset.
+                .modal-footer
+                    button.close(type="button",data-dismiss="modal").glyphicon.glyphicon-ok-sign
+                    button.close(type="button",data-dismiss="modal") Ok take me to the Map!
+
+     .featureInfo.modal.fade
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type="button",data-dismiss="modal",aria-hidden="true") &times;
+                    .modal-title
+                    h4#featureTitle
+                    //h4#featureIdTitle
+                .modal-body#featureInfoCanvas
+                .modal-footer
+                    h5#featureIdTitle    

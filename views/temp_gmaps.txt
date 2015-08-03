@@ -1,0 +1,26 @@
+.container#mapContainer
+        .row#buttonRow
+            .row-md
+                .input-group#findPay
+                    input#pay.form-control(type='text', name='search', placeholder="Enter something")
+                    span.input-group-btn
+            .row-md
+                .input-group#goBACK
+                    button#BackButton.btn.btn-default.btn(type='submit') Reset Map
+                    span.input-group-btn
+                    button#Backbutton.btn.btn-default.btn(type='submit').glyphicon.glyphicon-refresh
+        .mapCanvas
+        .loading
+		
+		
+		// display labels
+		
+		
+		
+		    var mapLabel = new MapLabel({
+        text: 'Test',
+        position: new google.maps.LatLng(34.515233, -100.918565),
+        map: map,
+        fontSize: 35,
+        align: 'right'
+    });

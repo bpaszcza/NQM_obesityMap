@@ -1,0 +1,117 @@
+body {
+  padding: 30px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: white;
+}
+
+.navbar-brand {
+    left: 10px;
+    padding: 8px 0px 0px 0px;
+}
+
+#brandImage {
+    height: 36px;
+}
+
+#brandText{
+     position: absolute;
+     width: 400px;
+     margin-left: 12.5px;
+     top: 0px;
+     margin-top: 16.5px;
+ }
+
+#navbar-main{
+    
+    margin-left: 250px;
+}
+
+#accordion.panel-group{
+    position: relative;
+    width: 100%;
+    height: 100%;
+	display: inline;
+}
+
+.row{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#referenceContainer{
+    padding: 10px 10px 5px 5px;
+}
+
+.mapCanvas {
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+
+/*#mapCanvas1 {
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}*/
+
+.mapContainer{
+    padding: 50px 0px 0px 0px;
+    margin: 0px;
+    width: 98%;
+    height: 100%;
+}
+
+.loading {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    background-image: url("loading.gif");
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 12;
+}
+
+/*.panel-group .panel+.panel {
+    margin-top: 5px;
+    margin-right: 5px;
+}*/
+
+.template {
+    display: inline;
+	position: relative;
+    top: 20px;
+	float: left;
+	width: 45%;
+	height: calc(100vh - 145px);
+    margin-top: 5px;
+    margin-right: 5px;	
+}
+
+#initialTemplate {
+    display: none;
+}
+
+.btn-add-panel {
+    float: right;
+    top: 0px;
+    height: fill-available;
+}
+
+.panel-heading{
+    height: 50px;
+}
+
+.glyphicon-remove-sign {
+    padding: 10px 15px 10px 15px;
+}
+
+/*a {
+  color: #00B7FF;
+}*/
