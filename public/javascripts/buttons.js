@@ -41,32 +41,41 @@ $(function () {
     });
 });
 
-function featureClick(event, lat, lng){
-    if (event.feature.getProperty('TTWA07CD') != undefined) {
+function loadMapColours(idLA){
+	
+	//loop over all msoa's for given LA, from dictionary
+	for(;;){
+		loadGeoData(topojson.feature(oLSOAarea[idLA], oLSOAarea[idLA]['objects'][idLA])); 
+	}
+	
+    //addPolygonColors(oDeficiencyData[year]);
+}
+
+function featureClick(map, event, lat, lng){
+    if (event.feature.getProperty('LMCTY11CD') != undefined) {
         map.setZoom(11);
-        map.setCenter(new google.maps.LatLng(lat, lng));
-        var id = event.feature.getProperty('TTWA07CD');
-        var name = event.feature.getProperty('TTWA07NM');
-        var idTTW = oLookUps[event.feature.getProperty('TTWA07CD')];
-        thisTTW = idTTW;
+        var id = event.feature.getProperty('LMCTY11CD');
+        var name = event.feature.getProperty('LMCTY11NM');
+        var idLA = oLookUps[event.feature.getProperty('LMCTY11CD')];
+        //thisTTW = idTTW;
         map.data.forEach(function (feature) {
             map.data.remove(feature);
         });
-        $.ajax("/LSOA_Sales_map/" + idTTW ).done(function (oDeficiencyDataYear) {
-            oDeficiencyData[year] = oDeficiencyDataYear;
-            addPolygonColors(oDeficiencyData[year]);
+        $.ajax("/MSOA_map/" + idLA ).done(function () {
+            //oDeficiencyData[year] = oDeficiencyDataYear;
+            //addPolygonColors(oDeficiencyData[year]);
         });
-        loadMapColours(idTTW);
+        loadMapColours(idLA);
+        zoom(map);
     } else { 
         var id = event.feature.getProperty('LSOA11CD');
         var name = event.feature.getProperty('LSOA11NM');
-        $("#featureTitle").html(" Housing Sales Price Distribution " + name)
-        $(".modal-header").attr("id", id)
-        $("#featureIdTitle").html(" This histogram shows the house sales in " + name + " in "+year+". The average for the larger area of " + oTTWName[oLookUps[thisTTW]] + " was £" + d3.format(",")(oAverages['sales'][year][oLookUps[thisTTW]]) + " and the National average house price was " + d3.format(",")(oAverages['sales'][year]['nationalAverage']))
-        idTTW = thisTTW;
+        /*
         $.ajax("/sales_data/" + year + "/" + idTTW + "/" + id ).done(function (oSalesYearTTWID) {
-        loadFeatureInfoBox(oSalesYearTTWID);
+        loadFeatureInfoBox(oSalesYearTTWID;
+
         })
+        */
     }
 }
 

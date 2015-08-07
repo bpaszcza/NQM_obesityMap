@@ -9,7 +9,7 @@ var app = express();
 //var aMapStyles = require("./public/stylesheets/styledMap.json");
 
 var oTopoLA = require("./data/topoLAplus2.json");
-//var oTopoLA = require("./data/topoMSOA.json"); NOTE: needs changing input in loadGeoData as well!!! (maps.js)
+var oTopoMSOA = require("./data/topoMSOA.json"); 
 
 app.set("views", __dirname + "/views");
 app.set("view engine","jade");
@@ -22,10 +22,19 @@ app.get('/references', function(req, res){
     res.render('references');
 })
 
+app.get("/MSOA_map/:idLA/", function(req, res){
+    mapFlag = 1;
+    var idTTW = req.params["idTTW"];
+    thisTTW = idTTW;
+    var oDeficiencyData = calculateDeficiency(oLSOASales[year][thisTTW], val);
+    res.json(oDeficiencyData[year]);
+});
+
 app.get('/', function(req, res){
     res.render('index', {
                         title: "Housing"
 						, topoLA: oTopoLA
+						, topoMSOA: oTopoMSOA
                         }
     );
 });
