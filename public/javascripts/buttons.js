@@ -1,3 +1,6 @@
+var oGeoMSOA = {};
+
+
 var hash = 1;
 //var maps = require('./maps.js');
 
@@ -12,7 +15,7 @@ function firstLoad(){
 firstLoad();
 
 $(function () {//add new panel button
-    $(".btn-add-panel").on("click", function () {
+    $(document).on("click",".btn-add-panel", function () {
         var $newPanel = $("#initialTemplate").clone();
         $newPanel.find(".accordion-toggle").attr("href", "#" + (++hash))
              .text("Dynamic panel #" + hash);
@@ -23,6 +26,8 @@ $(function () {//add new panel button
         $newPanel.find(".panel-body").attr("id", String("panel-body" + hash));
         $newPanel.find(".mapContainer").attr("id", String("mapContainer" + hash));
         $newPanel.find(".mapCanvas").attr("id", String("mapCanvas" + hash));
+        $newPanel.find(".backButton").attr("id", String("backButton" + hash));
+        $newPanel.find(".btn-add-panel").attr("id", String("btn-add-panel" + hash));
 
         
 
@@ -33,50 +38,77 @@ $(function () {//add new panel button
         $("#accordion").append($newPanel.fadeIn());
         addMap(Number(hash));
     });
-})
-
-$(function () {
-    $(document).on('click', '.glyphicon-remove', function () {
-        $(this).parents('.panel').get(0).remove();
-    });
 });
 
-function loadMapColours(idLA){
+$(function () {
+    //  Force an update by changing the zoom level in the background
+    $(document).on('click', '.glyphicon-refresh', function () {
+            for (var i = 1; i < mapArray.length; i++){
+                 map = mapArray[i];
+                var currentZoom = map.getZoom();
+                map.setZoom( currentZoom - 1 );
+                map.setZoom( currentZoom );   
+            }   
+        });
+});
+
+$(function () {
+    $(document).on('click', '.glyphicon-remove-sign', function () {
+        $(this).parents('.panel').get(0).remove();
+    });
+
+});
+
+function loadMapColours(idLA, map){
 	
-	//loop over all msoa's for given LA, from dictionary
-	for(;;){
-		loadGeoData(topojson.feature(oLSOAarea[idLA], oLSOAarea[idLA]['objects'][idLA])); 
-	}
-	
-    //addPolygonColors(oDeficiencyData[year]);
+    console.log(idLA);
+	loadGeoData(map, oGeoMSOA[idLA]);
+    polygonColors(map, idLA);
 }
 
-function featureClick(map, event, lat, lng){
-    if (event.feature.getProperty('LMCTY11CD') != undefined) {
-        map.setZoom(11);
-        var id = event.feature.getProperty('LMCTY11CD');
-        var name = event.feature.getProperty('LMCTY11NM');
-        var idLA = oLookUps[event.feature.getProperty('LMCTY11CD')];
+function featureClick(event, lat, lng, map){
+    if (event.feature.getProperty('CTYUA11CD') != undefined) {
+        //map.setZoom(11);
+        var idLA = event.feature.getProperty('CTYUA11CD');
+        var name = event.feature.getProperty('CTYUA11NM');
+        //var msoaList = oLookUps[event.feature.getProperty('LMCTY11CD')].msoa;
+        //var idLA = oLookUps[event.feature.getProperty('LMCTY11CD')];
         //thisTTW = idTTW;
         map.data.forEach(function (feature) {
             map.data.remove(feature);
         });
-        $.ajax("/MSOA_map/" + idLA ).done(function () {
-            //oDeficiencyData[year] = oDeficiencyDataYear;
-            //addPolygonColors(oDeficiencyData[year]);
-        });
-        loadMapColours(idLA);
-        zoom(map);
-    } else { 
-        var id = event.feature.getProperty('LSOA11CD');
-        var name = event.feature.getProperty('LSOA11NM');
-        /*
-        $.ajax("/sales_data/" + year + "/" + idTTW + "/" + id ).done(function (oSalesYearTTWID) {
-        loadFeatureInfoBox(oSalesYearTTWID;
 
-        })
-        */
+        if(!oGeoMSOA.hasOwnProperty(idLA)){
+            $.ajax("/MSOA_map/" + idLA).done(function (res) {
+                oGeoMSOA[idLA] = res;
+                loadMapColours(idLA, map)
+                createSchoolMarkers(idLA, map);
+                zoom(map);
+            });
+        }else {
+            loadMapColours(idLA, map);
+            createSchoolMarkers(idLA, map);
+            zoom(map);
+        }
     }
 }
 
-   
+
+$(function () { // BACK BUTTON
+    $(document).on('click', ".backButton", function () {
+        var string = this.id;
+        console.log(string);
+        var index = string.substr(10);
+
+        console.log(index);
+        //var map = mapArray[index];
+        addMap(index);
+
+        /*clearMarkers(map);
+        map.data.forEach(function (feature) {
+        map.data.remove(feature);
+        });
+        loadGeoData(map, topojson.feature(oTopoLA, oTopoLA.objects.geoLAplus));*/
+        zoom(mapArray[index]);
+    });
+})

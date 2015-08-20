@@ -50,14 +50,6 @@ body {
     bottom: 0px;
 }
 
-/*#mapCanvas1 {
-    position: absolute;
-    top: 50px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-}*/
-
 .mapContainer{
     padding: 50px 0px 0px 0px;
     margin: 0px;
@@ -112,6 +104,18 @@ body {
     padding: 10px 15px 10px 15px;
 }
 
-/*a {
-  color: #00B7FF;
-}*/
+#keyCanvas {
+    z-index: 10;
+    /*background-color: red;*/
+}
+
+#keyContainer {
+    /*display: inline-block;*/
+    position: relative;
+    width: 10%;
+    padding-bottom: 10%; /* aspect ratio */
+    vertical-align: bottom;
+    margin-top: 2%;
+    margin-left: 90%;
+    overflow: hidden;
+}

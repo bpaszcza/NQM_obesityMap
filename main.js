@@ -8,8 +8,11 @@ var bodyParser = require("body-parser");
 var app = express();
 //var aMapStyles = require("./public/stylesheets/styledMap.json");
 
-var oTopoLA = require("./data/topoLAplus2.json");
-var oTopoMSOA = require("./data/topoMSOA.json"); 
+var oTopoLA = require("./data/topoCTYUA.json");
+var oGeoMSOA = require("./data/geoMSOA_onested.json"); 
+var oLookUps = require("./data/LAtoMSOAdictionary.json");
+var oMSOAData = require("./data/MSOA_object.json");
+var oSchoolsData = require("./data/objSchools.json");
 
 app.set("views", __dirname + "/views");
 app.set("view engine","jade");
@@ -22,19 +25,27 @@ app.get('/references', function(req, res){
     res.render('references');
 })
 
+app.get("/marker/:schID", function(req, res) {
+	var schID = req.params["schID"];
+	
+	res.json(oSchoolsData[schID]);
+})
+
 app.get("/MSOA_map/:idLA/", function(req, res){
-    mapFlag = 1;
-    var idTTW = req.params["idTTW"];
-    thisTTW = idTTW;
-    var oDeficiencyData = calculateDeficiency(oLSOASales[year][thisTTW], val);
-    res.json(oDeficiencyData[year]);
+    
+    var idLA = req.params["idLA"];
+
+    res.json(oGeoMSOA[idLA]);
 });
 
 app.get('/', function(req, res){
     res.render('index', {
                         title: "Housing"
 						, topoLA: oTopoLA
-						, topoMSOA: oTopoMSOA
+						//, geoMSOA: oGeoMSOA
+						, LookUps: oLookUps
+						, msoaData: oMSOAData
+						, schoolsData: oSchoolsData
                         }
     );
 });

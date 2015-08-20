@@ -1,6 +1,40 @@
 //
 var mapArray = [];
 
+var nqmMapType = new google.maps.StyledMapType([
+      {
+        stylers: [
+          {hue: '#7f7f7f'},
+          {visibility: 'simplified'},
+          {gamma: 0.9},
+          {saturation: -100},
+          {weight: 0.5}
+        ]
+      },{
+      featureType: "road",
+      elementType: "labels",
+      stylers: [
+        { visibility: "off" }
+        ]
+      }, {
+        featureType: 'landscape',
+        elementType: 'geometry',
+        stylers: [
+         { visibility: "off" }
+        ]
+       }, {
+         featureType: 'poi',
+         elementType: 'geometry',
+         stylers: [
+            { visibility: "off" }
+         ]
+        }
+        ], {
+            name: 'Custom Style'
+  });
+
+var nqmMapTypeId = 'custom_style';
+
 function loadGeoData(map, input){
     $('.loading').show();
     map.data.addGeoJson(input)
@@ -23,6 +57,9 @@ function initialize() {
             style: google.maps.ZoomControlStyle.LARGE,
             position: google.maps.ControlPosition.TOP_RIGHT
 
+        },
+        mapTypeControlOptions: {
+            mapTypeIds: [google.maps.MapTypeId.ROADMAP, nqmMapTypeId]
         }
     };
     var canvasAddress = String("#mapCanvas" + mapIndex);
@@ -43,19 +80,22 @@ function initialize() {
         zoomChanged()
     });*/
 
-    mapArray[mapIndex].data.addListener('click', function(event) {
+    mapArray[mapIndex].data.addListener('click', function (event) {
         var lat = event.latLng.lat();
         var lng = event.latLng.lng();
-        featureClick(event,lat, lng)
+        featureClick(event, lat, lng, mapArray[mapIndex]);
     });    
     
     loadGeoData(mapArray[mapIndex], topojson.feature(oTopoLA, oTopoLA.objects.geoLAplus));
 
-	//map.data.setStyle(featureStyle);
+	//setting map style:
+    mapArray[mapIndex].mapTypes.set(nqmMapTypeId, nqmMapType);
+    mapArray[mapIndex].setMapTypeId(nqmMapTypeId);
 
-    /*setYearOptions()
-    addPolygonColors(oDeficiencyData[year]);
-    addKeyD3()*/
+    /*setYearOptions()*/
+    //polygonColors(mapArray[mapIndex], );
+    zoom(mapArray[mapIndex]);
+    addKeyD3(mapIndex);
 }
 
 function addMap(mapIndex) {
@@ -72,6 +112,9 @@ function addMap(mapIndex) {
             style: google.maps.ZoomControlStyle.LARGE,
             position: google.maps.ControlPosition.TOP_RIGHT
 
+        },
+        mapTypeControlOptions: {
+            mapTypeIds: [google.maps.MapTypeId.ROADMAP, nqmMapTypeId]
         }
     };
     var canvasAddress = String("#mapCanvas" + mapIndex);
@@ -83,10 +126,16 @@ function addMap(mapIndex) {
     mapArray[mapIndex].data.addListener('click', function(event) {
         var lat = event.latLng.lat();
         var lng = event.latLng.lng();
-        featureClick(event,lat, lng)
+        featureClick(event,lat, lng, mapArray[mapIndex])
     });    
+
+    	//setting map style:
+    mapArray[mapIndex].mapTypes.set(nqmMapTypeId, nqmMapType);
+    mapArray[mapIndex].setMapTypeId(nqmMapTypeId);
     
     loadGeoData(mapArray[mapIndex], topojson.feature(oTopoLA, oTopoLA.objects.geoLAplus));
+    addKeyD3(mapIndex);
+    zoom(mapArray[mapIndex]);
 }
 
 
@@ -100,6 +149,9 @@ function zoom(map) {
     processPoints(feature.getGeometry(), bounds.extend, bounds);
   });
   map.fitBounds(bounds);
+  var currentZoom = map.getZoom();
+  var newZoom = currentZoom + 1;
+  map.setZoom( newZoom );
 }
 
 /**

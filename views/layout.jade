@@ -23,9 +23,16 @@ html
 
         script(src="/javascripts/buttons.js")
         script(src="/javascripts/maps.js")
+        script(src="/javascripts/addKey.js")
+        script(src="/javascripts/setMapColours.js")
+        script(src="/javascripts/addMarkers.js")
 
         script.
-            var oTopoLA = !{JSON.stringify(topoLA)} 
+            var oTopoLA = !{JSON.stringify(topoLA)}
+            var oLookUps = !{JSON.stringify(LookUps)};
+            //var oGeoMSOA = !{JSON.stringify(geoMSOA)};
+            var oMSOAData = !{JSON.stringify(msoaData)};
+            var oSchoolsData = !{JSON.stringify(schoolsData)};
 
   body
         .navbar.navbar-default.navbar-fixed-top(role='navigation')
@@ -48,12 +55,14 @@ html
     #accordion.panel-group
       #mainPanel.panel.panel-default.template
         .panel-heading
-          span.glyphicon.glyphicon-remove.pull-right
+          //span.glyphicon.glyphicon-remove-sign.pull-right
           button.btn-add-panel.btn.btn-default
                 i.glyphicon.glyphicon-plus.pull-right
                 |  New map
+          button.btn.btn-default.btn(type='submit').glyphicon.glyphicon-refresh.pull-right
+          button#backButton1.backButton.btn.btn-default.btn(type='submit').glyphicon.glyphicon-backward.pull-right
           h4.panel-title
-              | Non-Collapsible Group Item #1 (template panel)
+              | Main Map
          #panel-body1.panel-body
             #mapContainer1.container.mapContainer
              .row#buttonRow
@@ -61,16 +70,15 @@ html
                 .input-group#findPay
                     input#pay.form-control(type='text', name='search', placeholder="Enter something")
                     span.input-group-btn
-             .row-md
-                .input-group#goBACK
-                    button#BackButton.btn.btn-default.btn(type='submit') Reset Map
-                    span.input-group-btn
-                    button#Backbutton.btn.btn-default.btn(type='submit').glyphicon.glyphicon-refresh
              #mapCanvas1.mapCanvas
              .loading
       #initialTemplate.panel.panel-default.template
         .panel-heading
-          span.glyphicon.glyphicon-remove.pull-right
+          span.glyphicon.glyphicon-remove-sign.pull-right
+          button.btn-add-panel.btn.btn-default
+                i.glyphicon.glyphicon-plus.pull-right
+                |  New map
+          button.backButton.btn.btn-default.btn(type='submit').glyphicon.glyphicon-backward.pull-right
           h4.panel-title
             |  (template panel)
         .panel-body
