@@ -38,13 +38,17 @@ function createBuckets (oSchoolData) {
 			var urbanRural = schoolEntry.schoolInfo.urbanRural
 			totalIndexArray.push(index);//chng
 			if (~urbanRural.indexOf("Urban") || ~urbanRural.indexOf("Town")) {
-				urbanIndexArray.push(index);
-			} else {
-				ruralIndexArray.push(index);
+				if (index != 0.){
+					urbanIndexArray.push(index);
+				}
+			} else if (~urbanRural.indexOf("Village") || ~urbanRural.indexOf("Hamlet")){
+				if (index != 0.){
+					ruralIndexArray.push(index);
+				}
+				
 			};
 		};
 	};
-
     //loop for three indexes bucket boundary values:
     oBucket.total = getBoundaryValues(totalIndexArray);
     oBucket.rural = getBoundaryValues(ruralIndexArray);
