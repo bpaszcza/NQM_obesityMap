@@ -1,5 +1,6 @@
 //var aKeyValues = ["           NA", "    < 100%", "100-105%", "105-110%", "110-120%", "120-130%", "130-150%", "    > 150%"]
-var aKeyValues = [">35%", "30-35%", "25-30%", "20-25%", "<20%"]
+//var aKeyValues = [">35%", "30-35%", "25-30%", "20-25%", "<20%"]
+var aKeyValues = ["<20%", "20-25%", "25-30%", "30-35%", ">35%"]
 var oKeyColors = [];
 var legendFlag = false;
 var divName_obesity = "#obesityLegendContainer";
@@ -13,18 +14,18 @@ var colorArray_index = ["#9999EB",
         "#1919D1", 
         "#0000B8", 
         "#000066"];
-var textArray_index = ["Highest", "", "", "", "Lowest"];
+var textArray_index = ["Lowest", "", "", "", "Highest"];
 
 
 
 function setKeyColors(){
     
     //oKeyColors["color1"] = "hsla(120, 100%, 70%, 1)";
-    var hue = 65;
+    var hue = 60;
     var hueMin = 25;
     var hueStep = (hue - hueMin) /  (aKeyValues.length - 3);
-    var lightness = 90;
-    var lightnessMin = 70;
+    var lightness = 80;
+    var lightnessMin = 80;
     var lightnessStep = (lightness - lightnessMin) /  (aKeyValues.length - 3);
     for(i = 0; i < aKeyValues.length; i++){
         name = "color" + i;
