@@ -7,7 +7,7 @@ var hash = 1;
 function firstLoad(){
    // POPUP WINDOW ON ENTRANCE
    $(window).load(function(){
-        $("#welcomeTitle").html("Welcome to the Interactive Housing Affordability Map")
+        $("#welcomeTitle").html("Welcome to the Schools, Fast Foods, and Child Obesity Map!")
         $(".welcomeInfo").modal("show");
     });
 };
@@ -81,7 +81,7 @@ function featureClick(event, map, mapIndex){
         var idLA = event.feature.getProperty('CTYUA11CD');
         var name = event.feature.getProperty('CTYUA11NM');
         map.idLA = idLA;
-        console.log(String("panelTitle" + mapIndex));
+        //console.log(String("panelTitle" + mapIndex));
         document.getElementById(String("panelTitle"+mapIndex)).innerHTML = name;
 
         var ageSelected = checkDropdownStatus(mapIndex, "obesityAge");

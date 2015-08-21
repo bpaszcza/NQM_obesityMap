@@ -9,8 +9,6 @@ var aPNGSchoolMarkers = [
     "/images/school1_24px_2.png",
     "/images/school1_24px_3.png",
     "/images/school1_24px_4.png",
-    "/images/school1_24px_5.png",
-    "/images/school1_24px_6.png",
     "/images/school1_24px.png"
 ]; 
 /*var aLatLong = [
@@ -21,12 +19,12 @@ var aPNGSchoolMarkers = [
 ];*/
 
 function selectMarkerColor(n, colourBoundaries){ //this neeeds tuuuuning!!!!
-    if (isNaN(n)){return aPNGSchoolMarkers[7]};
+    if (isNaN(n)){return aPNGSchoolMarkers[5]};
     if(n < colourBoundaries[0]){return aPNGSchoolMarkers[0]};
-    if(n < colourBoundaries[1] && n >= colourBoundaries[0]){return aPNGSchoolMarkers[2]};
-    if(n < colourBoundaries[2] && n >= colourBoundaries[1]){return aPNGSchoolMarkers[4]};
-    if(n < colourBoundaries[3] && n >= colourBoundaries[2]){return aPNGSchoolMarkers[5]};
-    if(n >= colourBoundaries[3]){return aPNGSchoolMarkers[6]};
+    if(n < colourBoundaries[1] && n >= colourBoundaries[0]){return aPNGSchoolMarkers[1]};
+    if(n < colourBoundaries[2] && n >= colourBoundaries[1]){return aPNGSchoolMarkers[2]};
+    if(n < colourBoundaries[3] && n >= colourBoundaries[2]){return aPNGSchoolMarkers[3]};
+    if(n >= colourBoundaries[3]){return aPNGSchoolMarkers[4]};
 }
 
 function createSchoolMarkers(map, indexSelected) {
@@ -164,6 +162,8 @@ function displaySchoolInfo(map, marker) {
 
         infowindow.open(map, marker);
         map.setCenter(marker.getPosition());
+
+        setTimeout(function () { infowindow.close(); }, 5000);
         //console.log(marker.getPosition());
         clearffMarkers(map);
         createFastfoodMarkers(schID, map);

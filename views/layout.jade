@@ -15,7 +15,7 @@ html
         //link(rel='stylesheet', media="(max-width: 700px)", href='stylesheets/mobileBarChart.css')
 
         script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
-        script(src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true")
+        script(src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=false")
         script(src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js")
         script(src="http://d3js.org/topojson.v1.min.js")
         script(src="http://d3js.org/d3.v3.min.js")
@@ -46,58 +46,20 @@ html
                         span.icon-bar
                     a.navbar-brand(href='/', style="position:fixed;")
                         img#brandImage(src="/images/logo.png")
-                        span#brandText Obesity, Schools and nearby Fast Foods Map
+                        span#brandText Schools, Fast Foods, and Child Obesity Map
                 #navbar-main.navbar-collapse.collapse
-                    ul#navigate.nav.navbar-nav.navbar-right
+                    ul#navigate.nav.navbar-nav.navbar-right.pull-right
+                        li
+                            button.btn-add-panel.btn.btn-default.btn-header
+                                i.glyphicon.glyphicon-plus.pull-right
+                                |Add map&nbsp;
+                        li
+                            button.btn.btn-default.btn-header.btn(type='submit').glyphicon.glyphicon-refresh.pull-right
+                        li
+                            button#legendButton.btn.btn-default.center.btn-header
+                                |Legend
                         li
                             a(href='/').glyphicon.glyphicon-home
                         li
                             a(href='/references') Data Sources
-                        li
-                            button#legendButton.btn-add-panel.btn.btn-default.center
-                                |Legend
-    #accordion.panel-group
-      #mainPanel.panel.panel-default.template
-        .panel-heading
-          //span.glyphicon.glyphicon-remove-sign.pull-right
-          button.btn-add-panel.btn.btn-default
-                i.glyphicon.glyphicon-plus.pull-right
-                |  Add map 
-          button.btn.btn-default.btn(type='submit').glyphicon.glyphicon-refresh.pull-right
-          button#backButton1.backButton.btn.btn-default.btn(type='submit').glyphicon.glyphicon-backward.pull-right
-          select#obesityAge1.ageDropdown.form-control.pull-right
-            option(value='11yr') Age 10-11 Child Obesity
-            option(value='adult') Adult Obesity
-          select#indexChoice1.indexDropdown.form-control.pull-right
-            option(value='total') All Schools Fastfood Density
-            option(value='rural') Rural Schools Fastfood Density
-            option(value='urban') Urban Schools Fastfood Density
-          h4#panelTitle1.panel-title
-              | Select Local Authority
-         #panel-body1.panel-body
-            #mapContainer1.container.mapContainer
-             #mapCanvas1.mapCanvas
-             .loading
-      #initialTemplate.panel.panel-default.template
-        .panel-heading
-          span.glyphicon.glyphicon-remove-sign.pull-right
-          button.btn-add-panel.btn.btn-default
-                i.glyphicon.glyphicon-plus.pull-right
-                |  Add map
-          button.backButton.btn.btn-default.btn(type='submit').glyphicon.glyphicon-backward.pull-right
-          select.ageDropdown.form-control.pull-right
-            option(value='11yr') Age 10-11 Child Obesity
-            option(value='adult') Adult Obesity
-          select.indexDropdown.form-control.pull-right
-            option(value='total') All Schools Fastfood Density
-            option(value='rural') Rural Schools Fastfood Density
-            option(value='urban') Urban Schools Fastfood Density
-          h4.panel-title
-            |  Select Local Authority
-        .panel-body
-            .container.mapContainer
-               .mapCanvas
-               .loading
-
-      
      block content

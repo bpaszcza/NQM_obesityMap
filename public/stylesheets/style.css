@@ -21,6 +21,14 @@ body {
      margin-top: 16.5px;
  }
 
+.panel-title {
+    padding-top: 8.5px;
+    font-size: larger;
+    font-weight: bold;
+    color: #262262;
+    width: 250px;
+}
+
 #navbar-main{
     
     margin-left: 250px;
@@ -136,4 +144,20 @@ overflow-x: hidden;
 
 #legendCanvas {
 padding: 10px;
+}
+
+.btn-default {
+    padding-bottom: 8.335px;
+    padding-top: 8.335px;
+    margin-left: 2px;
+    margin-right: 2px;
+    top: 0px;
+    display: inline;
+}
+
+.btn-header {
+    margin-top: 5.2px;
+}
+.glyphicon-refresh{
+    height:  39.333px;
 }

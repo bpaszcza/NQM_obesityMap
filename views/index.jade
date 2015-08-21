@@ -39,18 +39,21 @@ block content
                 .modal-body#welcomeInfoCanvas
                     h4#welcomeIdTitle
                     p
-                      | This map shows the percentage of houses that a person could afford based on annual salary. Each TTW (Travel To Work) area is colour coded according to the key displayed on the right. 
+                      | This map shows Primary Schools in the UK, along with nearby Fast Food stores and obesity rates for children and adults in the neighbourhood.
                     p
-                      | You can input your own annual salary, use the median salary for each area and change the year using the settings on the left. Try the Scatter plot button and see what happens!
+                      | Firstly, choose the County you would like to see the data for. Then, try clicking one of the school's markers that dropped on the map!
+                      | The black hamburgers indicate location of nearby fast foods.
+                      | For information on the meaning of the colours, click the button 'Legend'!
                     p
-                      | Click once on any area of the map to zoom in!
+                      | Using the dropdown list, pick which schools to display (depending on whether they are located in cities or rural areas) and switch between 
+                      | displaying obesity rates for children and adults.
                     p
-                      | Click again on any small area to see a histogram of house prices in that area.
+                      | Click the <b>'New map'</b> button to add a second map, enabling you to compare different schools and regions.
                     p
-                      | Click Reset at any time to reset.
+                      | Thank you!
                 .modal-footer
                     button.close(type="button",data-dismiss="modal").glyphicon.glyphicon-ok-sign
-                    button.close(type="button",data-dismiss="modal") Ok take me to the Map!
+                    button.close(type="button",data-dismiss="modal") Take me to the Map!
 
      .featureInfo.modal.fade
         .modal-dialog
@@ -62,4 +65,39 @@ block content
                     //h4#featureIdTitle
                 .modal-body#featureInfoCanvas
                 .modal-footer
-                    h5#featureIdTitle    
+                    h5#featureIdTitle
+    #accordion.panel-group
+        #mainPanel.panel.panel-default.template
+            .panel-heading
+              //span.glyphicon.glyphicon-remove-sign.pull-right
+              button#backButton1.backButton.btn.btn-default.btn(type='submit').glyphicon.glyphicon-backward.pull-right
+              select#obesityAge1.ageDropdown.form-control.pull-right
+                option(value='11yr') Age 10-11 Child Obesity
+                option(value='adult') Adult Obesity
+              select#indexChoice1.indexDropdown.form-control.pull-right
+                option(value='total') All Schools Fastfood Density
+                option(value='rural') Rural Schools Fastfood Density
+                option(value='urban') Urban Schools Fastfood Density
+              h4#panelTitle1.panel-title
+                  | Select Local Authority
+             #panel-body1.panel-body
+                #mapContainer1.container.mapContainer
+                 #mapCanvas1.mapCanvas
+                 .loading
+      #initialTemplate.panel.panel-default.template
+        .panel-heading
+          span.glyphicon.glyphicon-remove-sign.pull-right
+          button.backButton.btn.btn-default.btn(type='submit').glyphicon.glyphicon-backward.pull-right
+          select.ageDropdown.form-control.pull-right
+            option(value='11yr') Age 10-11 Child Obesity
+            option(value='adult') Adult Obesity
+          select.indexDropdown.form-control.pull-right
+            option(value='total') All Schools
+            option(value='rural') Rural Schools
+            option(value='urban') Urban Schools
+          h4.panel-title
+            |  Select Local Authority
+        .panel-body
+            .container.mapContainer
+               .mapCanvas
+               .loading

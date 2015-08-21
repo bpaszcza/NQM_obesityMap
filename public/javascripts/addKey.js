@@ -8,11 +8,11 @@ var textArray_obesity = aKeyValues;
 
 var divName_index = "#indexLegendContainer";
 
-/*var colorArray_index = ["hsla(247, 100%, 50%, 0.69)", 
-        "hsla(247, 100%, 60%, 0.69)", 
-        "hsla(247, 100%, 70%, 0.69)", 
-        "hsla(247, 100%, 80%, 0.69)", 
-        "hsla(247, 100%, 90%, 0.69)"];*/
+var colorArray_index = ["#9999EB", 
+        "#6666E0", 
+        "#1919D1", 
+        "#0000B8", 
+        "#000066"];
 var textArray_index = ["Highest", "", "", "", "Lowest"];
 
 
@@ -182,7 +182,6 @@ $(function () {
         if (legendFlag == false) {
             setKeyColors();
             var colorArray_obesity = oKeyColors;
-            var colorArray_index = oKeyColors;
             addLegend(divName_obesity, colorArray_obesity, textArray_obesity)
             addLegend(divName_index, colorArray_index, textArray_index)
             legendFlag = true;
