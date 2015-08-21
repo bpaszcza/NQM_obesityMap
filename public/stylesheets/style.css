@@ -67,13 +67,7 @@ body {
     background-image: url("loading.gif");
     background-position: center center;
     background-repeat: no-repeat;
-    z-index: 12;
 }
-
-/*.panel-group .panel+.panel {
-    margin-top: 5px;
-    margin-right: 5px;
-}*/
 
 .template {
     display: inline;
@@ -105,17 +99,41 @@ body {
 }
 
 #keyCanvas {
-    z-index: 10;
     /*background-color: red;*/
 }
 
 #keyContainer {
     /*display: inline-block;*/
     position: relative;
-    width: 10%;
+    width: 15%;
     padding-bottom: 10%; /* aspect ratio */
     vertical-align: bottom;
     margin-top: 2%;
-    margin-left: 90%;
-    overflow: hidden;
+    margin-left: 85%;
+    overflow: auto;
+}
+
+.ageDropdown{
+    padding: 0px 0px 0px 0px;
+    width: 200px;
+}
+
+.indexDropdown{
+    padding: 0px 0px 0px 0px;
+    width: 200px;
+}
+
+#legendButton {
+z-index: 12;
+}
+
+#legendContent{
+width: 450px;
+overflow-y: auto;
+overflow-x: hidden;
+
+}
+
+#legendCanvas {
+padding: 10px;
 }

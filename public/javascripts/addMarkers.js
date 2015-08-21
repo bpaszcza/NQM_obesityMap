@@ -20,31 +20,46 @@ var aPNGSchoolMarkers = [
   {lat: 52.517, lng: 13.394}
 ];*/
 
-function selectMarkerColor(n){ //this neeeds tuuuuning!!!!
+function selectMarkerColor(n, colourBoundaries){ //this neeeds tuuuuning!!!!
     if (isNaN(n)){return aPNGSchoolMarkers[7]};
-    if(n < 0.005){return aPNGSchoolMarkers[0]};
-    if(n < 0.01 && n >= 0.005){return aPNGSchoolMarkers[1]};
-    if(n < 0.016 && n >= 0.01){return aPNGSchoolMarkers[2]};
-    if(n < 0.025 && n >= 0.016){return aPNGSchoolMarkers[4]};
-    if(n < 0.045 && n >= 0.025){return aPNGSchoolMarkers[5]};
-    if(n >= 0.045){return aPNGSchoolMarkers[6]};
+    if(n < colourBoundaries[0]){return aPNGSchoolMarkers[0]};
+    if(n < colourBoundaries[1] && n >= colourBoundaries[0]){return aPNGSchoolMarkers[2]};
+    if(n < colourBoundaries[2] && n >= colourBoundaries[1]){return aPNGSchoolMarkers[4]};
+    if(n < colourBoundaries[3] && n >= colourBoundaries[2]){return aPNGSchoolMarkers[5]};
+    if(n >= colourBoundaries[3]){return aPNGSchoolMarkers[6]};
 }
 
-function createSchoolMarkers(idLA, map) {
+function createSchoolMarkers(map, indexSelected) {
+    var idLA = map.idLA;
+    var colourBoundaries = oBucket[indexSelected];
+    clearSchoolsMarkers(map);
     map.schoolMarkers = [];
     var aSchoolLatLong = [];
     var aSchoolID = oLookUps[idLA]["schools"];
 
     for (var a = 0; a < aSchoolID.length; a++ ) {
+
         var schID = aSchoolID[a];
+        var schoolDoc = oSchoolsData[schID];
+        var urbanRural = schoolDoc.schoolInfo.urbanRural;
         var address = {};
-        address.lat = oSchoolsData[schID].coordinates.lat;
-        address.lng = oSchoolsData[schID].coordinates.lng;
+        address.lat = schoolDoc.coordinates.lat;
+        address.lng = schoolDoc.coordinates.lng;
         address.schID = schID;
 
-        aSchoolLatLong.push(address);
+        if(indexSelected == "total"){
+           aSchoolLatLong.push(address);
+        } else if (indexSelected == "urban"){
+            if (~urbanRural.indexOf("Urban") || ~urbanRural.indexOf("Town")){
+                aSchoolLatLong.push(address);
+            }
+        } else if (indexSelected == "rural"){
+            if (~urbanRural.indexOf("Village") || ~urbanRural.indexOf("Hamlet")){
+                aSchoolLatLong.push(address);
+            }            
+        }  
     }
-    drop(map, aSchoolLatLong);
+    drop(map, aSchoolLatLong, colourBoundaries);
 }
 
 function createFastfoodMarkers(schID, map) {
@@ -68,22 +83,22 @@ function createFastfoodMarkers(schID, map) {
 
 
 
-function drop(map, aLatLong) {
+function drop(map, aLatLong, colourBoundaries) {
   var schoolMarkers = [];
   for (var i = 0; i < aLatLong.length; i++) {
       if(aLatLong[i].schID){ //for schools
           var schID = aLatLong[i].schID;
            var ffIndex = oSchoolsData[schID].index.fastfoods;
-            addMarkerWithTimeout(aLatLong[i], i * 15, map, ffIndex);
+            addMarkerWithTimeout(aLatLong[i], i * 15, map, ffIndex, colourBoundaries);
       } else { //for fastfoods
         var ffID = aLatLong[i].ffID;
-        addMarkerWithTimeout(aLatLong[i], i * 15, map, 9999);
+        addMarkerWithTimeout(aLatLong[i], i * 15, map, 9999, colourBoundaries);
       }
       
   }
 }
 
-function addMarkerWithTimeout(position, timeout, map, ffIndex) {
+function addMarkerWithTimeout(position, timeout, map, ffIndex, colourBoundaries) {
     
     if(ffIndex == 9999){
         var schoolIMG = {
@@ -93,7 +108,7 @@ function addMarkerWithTimeout(position, timeout, map, ffIndex) {
         var id = position.ffID;
 
     } else {
-       var pngURL = selectMarkerColor(ffIndex);
+       var pngURL = selectMarkerColor(ffIndex, colourBoundaries);
         var schoolIMG = {
             url: pngURL
         };
@@ -114,7 +129,6 @@ function addMarkerWithTimeout(position, timeout, map, ffIndex) {
 
         if (ffIndex != 9999) {
             google.maps.event.addListener(marker, 'click', function () {
-                //alert("I am marker " + marker.schID);
                 displaySchoolInfo(map, marker);
             });
             map.schoolMarkers.push(marker);
@@ -167,3 +181,12 @@ function clearffMarkers(map) {
     map.ffMarkers = [];
 }
 
+function clearSchoolsMarkers(map) {
+    if (map.schoolMarkers) {
+
+        for (var i = 0; i < map.schoolMarkers.length; i++) {
+            map.schoolMarkers[i].setMap(null);
+        }
+    }
+    map.schoolMarkers = [];
+}

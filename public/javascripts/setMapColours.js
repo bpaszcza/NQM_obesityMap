@@ -1,4 +1,4 @@
-function addPolygonColors(map, idLA){
+function addPolygonColors(map, idLA, dropdownChoice){
 
     map.data.setStyle(function (feature) {
         var msoaName = String(feature.getProperty('MSOA11NM'));
@@ -12,7 +12,16 @@ function addPolygonColors(map, idLA){
                 strokeColor: "black"
             }
         } else {
+
             var n = oMSOAData[msoaName]["children"]["percObeseYr6"];
+
+            if(dropdownChoice == "5yr"){
+                n = oMSOAData[msoaName]["children"]["percObeseReception"];
+
+            } else if (dropdownChoice == "adult"){
+                n = oMSOAData[msoaName]["adults"]["percObese"];
+            } 
+            
             //console.log(n);
             var color = selectKeyColor(n);
             return {
@@ -27,9 +36,10 @@ function addPolygonColors(map, idLA){
 
 }
 
-function polygonColors(map, idLA){
+function polygonColors(map, dropdownChoice){
+    var idLA = map.idLA;
     $('.loading').show();
     //if(oMSOAData.hasOwnProperty(oMSOAData)) {
-        addPolygonColors(map, idLA)
+        addPolygonColors(map, idLA, dropdownChoice)
         $('.loading').hide();
 }

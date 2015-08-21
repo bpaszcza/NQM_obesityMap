@@ -27,7 +27,9 @@ $(function () {//add new panel button
         $newPanel.find(".mapContainer").attr("id", String("mapContainer" + hash));
         $newPanel.find(".mapCanvas").attr("id", String("mapCanvas" + hash));
         $newPanel.find(".backButton").attr("id", String("backButton" + hash));
-        $newPanel.find(".btn-add-panel").attr("id", String("btn-add-panel" + hash));
+        $newPanel.find(".ageDropdown").attr("id", String("obesityAge" + hash));
+        $newPanel.find(".indexDropdown").attr("id", String("indexChoice" + hash));
+        $newPanel.find(".panel-title").attr("id", String("panelTitle" + hash));
 
         
 
@@ -59,21 +61,32 @@ $(function () {
 
 });
 
-function loadMapColours(idLA, map){
-	
-    console.log(idLA);
+function loadMapColours(map, valAgeDropdown){
+    var idLA = map.idLA;
+    //console.log(idLA);
 	loadGeoData(map, oGeoMSOA[idLA]);
-    polygonColors(map, idLA);
+    polygonColors(map, valAgeDropdown);
 }
 
-function featureClick(event, lat, lng, map){
+function checkDropdownStatus (mapIndex, nameOfList){
+     var element = document.getElementById(String(nameOfList + mapIndex));
+        
+     var selectedValue = element.value;
+     return selectedValue;
+}
+
+function featureClick(event, map, mapIndex){
     if (event.feature.getProperty('CTYUA11CD') != undefined) {
         //map.setZoom(11);
         var idLA = event.feature.getProperty('CTYUA11CD');
         var name = event.feature.getProperty('CTYUA11NM');
-        //var msoaList = oLookUps[event.feature.getProperty('LMCTY11CD')].msoa;
-        //var idLA = oLookUps[event.feature.getProperty('LMCTY11CD')];
-        //thisTTW = idTTW;
+        map.idLA = idLA;
+        console.log(String("panelTitle" + mapIndex));
+        document.getElementById(String("panelTitle"+mapIndex)).innerHTML = name;
+
+        var ageSelected = checkDropdownStatus(mapIndex, "obesityAge");
+        var indexSelected = checkDropdownStatus(mapIndex, "indexChoice");
+        
         map.data.forEach(function (feature) {
             map.data.remove(feature);
         });
@@ -81,13 +94,13 @@ function featureClick(event, lat, lng, map){
         if(!oGeoMSOA.hasOwnProperty(idLA)){
             $.ajax("/MSOA_map/" + idLA).done(function (res) {
                 oGeoMSOA[idLA] = res;
-                loadMapColours(idLA, map)
-                createSchoolMarkers(idLA, map);
+                loadMapColours(map, ageSelected)
+                createSchoolMarkers(map, indexSelected);
                 zoom(map);
             });
         }else {
-            loadMapColours(idLA, map);
-            createSchoolMarkers(idLA, map);
+            loadMapColours(map, ageSelected);
+            createSchoolMarkers(map, indexSelected);
             zoom(map);
         }
     }
@@ -97,10 +110,10 @@ function featureClick(event, lat, lng, map){
 $(function () { // BACK BUTTON
     $(document).on('click', ".backButton", function () {
         var string = this.id;
-        console.log(string);
+        //console.log(string);
         var index = string.substr(10);
 
-        console.log(index);
+        //console.log(index);
         //var map = mapArray[index];
         addMap(index);
 
@@ -109,6 +122,26 @@ $(function () { // BACK BUTTON
         map.data.remove(feature);
         });
         loadGeoData(map, topojson.feature(oTopoLA, oTopoLA.objects.geoLAplus));*/
-        zoom(mapArray[index]);
+        //zoom(mapArray[index]);
     });
 })
+
+$(function () { //ageDropdown
+    $(document).on('change', '.ageDropdown', function () {
+        var mapIndex = this.id.substr(10);
+        var val = $("#obesityAge"+mapIndex).val();
+        //console.log(mapIndex + "   " + val);
+
+        polygonColors(mapArray[mapIndex], val);
+        
+    });
+});
+
+$(function () { //indexDropdown
+    $(document).on('change', '.indexDropdown', function () {
+        var mapIndex = this.id.substr(11);
+        var val = $("#indexChoice"+mapIndex).val();
+        
+        createSchoolMarkers(mapArray[mapIndex], val)
+    });
+});

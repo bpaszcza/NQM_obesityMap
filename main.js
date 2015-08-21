@@ -21,6 +21,58 @@ app.use(bodyParser.json({limit: (5*1024*1000) }));
 
 /* here comes the code */
 
+var oBucket = {};
+
+function createBuckets (oSchoolData) {
+    var totalIndexArray = [];
+    var ruralIndexArray = [];
+    var urbanIndexArray = [];
+
+	
+    //loop for appending indices & urbanRural
+	for (var key in oSchoolData) {
+		if (oSchoolData.hasOwnProperty(key)) {
+			var schoolEntry = oSchoolData[key];
+			var index = parseFloat(schoolEntry.index.fastfoods);
+			
+			var urbanRural = schoolEntry.schoolInfo.urbanRural
+			totalIndexArray.push(index);//chng
+			if (~urbanRural.indexOf("Urban") || ~urbanRural.indexOf("Town")) {
+				urbanIndexArray.push(index);
+			} else {
+				ruralIndexArray.push(index);
+			};
+		};
+	};
+
+    //loop for three indexes bucket boundary values:
+    oBucket.total = getBoundaryValues(totalIndexArray);
+    oBucket.rural = getBoundaryValues(ruralIndexArray);
+    oBucket.urban = getBoundaryValues(urbanIndexArray);
+	
+}
+
+function getBoundaryValues (indexArray) {
+
+    indexArray.sort();
+	
+    var singleBinLength = Math.floor((indexArray.length)/5);
+
+    var boundaryValArr = [];
+    var previousBoundary = 0;
+    for (var i = 0; i < 4; i++){
+        var boundaryValID = previousBoundary + singleBinLength;
+
+        var boundary = indexArray[boundaryValID];
+        boundaryValArr.push(boundary);
+		previousBoundary = boundaryValID;
+    } //the last value in the array will be ~maximum value
+
+    return boundaryValArr;
+}
+
+//do a function watching for changes from dropdown
+
 app.get('/references', function(req, res){
     res.render('references');
 })
@@ -39,6 +91,9 @@ app.get("/MSOA_map/:idLA/", function(req, res){
 });
 
 app.get('/', function(req, res){
+	//var parsedSchoolsData = JSON.parse(oSchoolsData);
+	createBuckets(oSchoolsData);
+	
     res.render('index', {
                         title: "Housing"
 						, topoLA: oTopoLA
@@ -46,6 +101,7 @@ app.get('/', function(req, res){
 						, LookUps: oLookUps
 						, msoaData: oMSOAData
 						, schoolsData: oSchoolsData
+						, indexBucket: oBucket
                         }
     );
 });

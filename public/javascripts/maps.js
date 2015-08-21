@@ -83,7 +83,7 @@ function initialize() {
     mapArray[mapIndex].data.addListener('click', function (event) {
         var lat = event.latLng.lat();
         var lng = event.latLng.lng();
-        featureClick(event, lat, lng, mapArray[mapIndex]);
+        featureClick(event, mapArray[mapIndex], mapIndex);
     });    
     
     loadGeoData(mapArray[mapIndex], topojson.feature(oTopoLA, oTopoLA.objects.geoLAplus));
@@ -95,7 +95,7 @@ function initialize() {
     /*setYearOptions()*/
     //polygonColors(mapArray[mapIndex], );
     zoom(mapArray[mapIndex]);
-    addKeyD3(mapIndex);
+    //addKeyD3(mapIndex);
 }
 
 function addMap(mapIndex) {
@@ -126,7 +126,7 @@ function addMap(mapIndex) {
     mapArray[mapIndex].data.addListener('click', function(event) {
         var lat = event.latLng.lat();
         var lng = event.latLng.lng();
-        featureClick(event,lat, lng, mapArray[mapIndex])
+        featureClick(event, mapArray[mapIndex], mapIndex)
     });    
 
     	//setting map style:
@@ -134,7 +134,7 @@ function addMap(mapIndex) {
     mapArray[mapIndex].setMapTypeId(nqmMapTypeId);
     
     loadGeoData(mapArray[mapIndex], topojson.feature(oTopoLA, oTopoLA.objects.geoLAplus));
-    addKeyD3(mapIndex);
+    //addKeyD3(mapIndex);
     zoom(mapArray[mapIndex]);
 }
 

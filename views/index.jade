@@ -1,6 +1,34 @@
 extends layout
 
 block content
+
+    .legendModal.modal.fade
+        .modal-dialog
+            .modal-content#legendContent
+                .modal-header
+                 button.close(type="button",data-dismiss="modal",aria-hidden="true") &times;
+                .modal-title
+                 h3 Map Key
+                .modal-body#legendCanvas
+                  #obesityLegendContainer
+                    h4 Obesity
+                    br
+                    p Percentage of obese 11 year olds (or obese adults, depending on the 
+                    p choice in the second dropdown list) in the area
+                    br
+                    br
+                    hr
+                    br
+                  #indexLegendContainer
+                    h4 Fast Food density around Schools
+                    br
+                    p Index to show density of fast food around given school.
+                    br
+                    p Depending on what you have selected in the first dropdown list, 
+                    p the index shows how the school compares to all other schools 
+                    p in the country, or schools in the rural areas, or in the urban areas only.
+                    br
+                .modal-footer
     .welcomeInfo.modal.fade
         .modal-dialog
             .modal-content

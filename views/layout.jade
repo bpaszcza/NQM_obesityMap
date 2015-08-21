@@ -33,6 +33,7 @@ html
             //var oGeoMSOA = !{JSON.stringify(geoMSOA)};
             var oMSOAData = !{JSON.stringify(msoaData)};
             var oSchoolsData = !{JSON.stringify(schoolsData)};
+            var oBucket = !{JSON.stringify(indexBucket)}
 
   body
         .navbar.navbar-default.navbar-fixed-top(role='navigation')
@@ -52,24 +53,29 @@ html
                             a(href='/').glyphicon.glyphicon-home
                         li
                             a(href='/references') Data Sources
+                        li
+                            button#legendButton.btn-add-panel.btn.btn-default.center
+                                |Legend
     #accordion.panel-group
       #mainPanel.panel.panel-default.template
         .panel-heading
           //span.glyphicon.glyphicon-remove-sign.pull-right
           button.btn-add-panel.btn.btn-default
                 i.glyphicon.glyphicon-plus.pull-right
-                |  New map
+                |  Add map 
           button.btn.btn-default.btn(type='submit').glyphicon.glyphicon-refresh.pull-right
           button#backButton1.backButton.btn.btn-default.btn(type='submit').glyphicon.glyphicon-backward.pull-right
-          h4.panel-title
-              | Main Map
+          select#obesityAge1.ageDropdown.form-control.pull-right
+            option(value='11yr') Age 10-11 Child Obesity
+            option(value='adult') Adult Obesity
+          select#indexChoice1.indexDropdown.form-control.pull-right
+            option(value='total') All Schools Fastfood Density
+            option(value='rural') Rural Schools Fastfood Density
+            option(value='urban') Urban Schools Fastfood Density
+          h4#panelTitle1.panel-title
+              | Select Local Authority
          #panel-body1.panel-body
             #mapContainer1.container.mapContainer
-             .row#buttonRow
-             .row-md
-                .input-group#findPay
-                    input#pay.form-control(type='text', name='search', placeholder="Enter something")
-                    span.input-group-btn
              #mapCanvas1.mapCanvas
              .loading
       #initialTemplate.panel.panel-default.template
@@ -77,10 +83,17 @@ html
           span.glyphicon.glyphicon-remove-sign.pull-right
           button.btn-add-panel.btn.btn-default
                 i.glyphicon.glyphicon-plus.pull-right
-                |  New map
+                |  Add map
           button.backButton.btn.btn-default.btn(type='submit').glyphicon.glyphicon-backward.pull-right
+          select.ageDropdown.form-control.pull-right
+            option(value='11yr') Age 10-11 Child Obesity
+            option(value='adult') Adult Obesity
+          select.indexDropdown.form-control.pull-right
+            option(value='total') All Schools Fastfood Density
+            option(value='rural') Rural Schools Fastfood Density
+            option(value='urban') Urban Schools Fastfood Density
           h4.panel-title
-            |  (template panel)
+            |  Select Local Authority
         .panel-body
             .container.mapContainer
                .mapCanvas
