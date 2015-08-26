@@ -6,27 +6,22 @@ block content
         .modal-dialog
             .modal-content#legendContent
                 .modal-header
-                 button.close(type="button",data-dismiss="modal",aria-hidden="true") &times;
-                .modal-title
-                 h3 Map Key
+                   button.close(type="button",data-dismiss="modal",aria-hidden="true") &times;
+                   .modal-title
+                      h3 Map Key
                 .modal-body#legendCanvas
                   #obesityLegendContainer
                     h4 Obesity
                     br
-                    p Percentage of obese 11 year olds (or obese adults, depending on the 
-                    p choice in the second dropdown list) in the area
-                    br
-                    br
-                    hr
+                    p Percentage of obese 11 year olds (or obese adults, depending on the choice in the second dropdown list) in the area
                     br
                   #indexLegendContainer
+                    hr
                     h4 Fast Food density around Schools
                     br
                     p Index to show density of fast food around given school.
                     br
-                    p Depending on what you have selected in the first dropdown list, 
-                    p the index shows how the school compares to all other schools 
-                    p in the country, or schools in the rural areas, or in the urban areas only.
+                    p Depending on what you have selected in the first dropdown list, the index shows how the school compares to all other schools in the country, or schools in the rural areas, or in the urban areas only.
                     br
                 .modal-footer
     .welcomeInfo.modal.fade
@@ -38,6 +33,8 @@ block content
                         h4#welcomeTitle
                 .modal-body#welcomeInfoCanvas
                     h4#welcomeIdTitle
+                    p
+                      | Note: this is an <b>Alpha Release</b>, which is not optimised for <b>MOBILE PHONES</b>
                     p
                       | This map shows Primary Schools in the UK, along with nearby Fast Food stores and obesity rates for children and adults in the neighbourhood.
                     p
@@ -53,7 +50,7 @@ block content
                       | Thank you!
                 .modal-footer
                     button.close(type="button",data-dismiss="modal").glyphicon.glyphicon-ok-sign
-                    button.close(type="button",data-dismiss="modal") Take me to the Map!
+                    button.close(type="button",data-dismiss="modal") Take me to the Map!&nbsp
 
      .featureInfo.modal.fade
         .modal-dialog
@@ -92,9 +89,9 @@ block content
             option(value='11yr') Age 10-11 Child Obesity
             option(value='adult') Adult Obesity
           select.indexDropdown.form-control.pull-right
-            option(value='total') All Schools
-            option(value='rural') Rural Schools
-            option(value='urban') Urban Schools
+            option(value='total') All Schools Fastfood Density
+            option(value='rural') Rural Schools Fastfood Density
+            option(value='urban') Urban Schools Fastfood Density
           h4.panel-title
             |  Select Local Authority
         .panel-body

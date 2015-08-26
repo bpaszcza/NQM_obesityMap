@@ -22,17 +22,17 @@ function setKeyColors(){
     
     //oKeyColors["color1"] = "hsla(120, 100%, 70%, 1)";
     var hue = 60;
-    var hueMin = 25;
-    var hueStep = (hue - hueMin) /  (aKeyValues.length - 3);
-    var lightness = 80;
-    var lightnessMin = 80;
-    var lightnessStep = (lightness - lightnessMin) /  (aKeyValues.length - 3);
+    var hueMin = 0;
+    var hueStep = (hue - hueMin) /  (aKeyValues.length-1);
+    /*var lightness = 80;
+    var lightnessMin = 65;
+    var lightnessStep = (lightness - lightnessMin) /  (aKeyValues.length - 3);*/
     for(i = 0; i < aKeyValues.length; i++){
         name = "color" + i;
-        value = "hsla(" + hue + " ,100%, " + lightness + "%, 1)";
+        value = "hsla(" + hue + " ,100%, 50%, 0.8)";
         oKeyColors[i] = value
         hue -= hueStep;
-        lightness -=lightnessStep;
+        //lightness -=lightnessStep;
     }
     return oKeyColors
 }
