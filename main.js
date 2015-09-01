@@ -12,7 +12,8 @@ var oTopoLA = require("./data/topoCTYUA.json");
 var oGeoMSOA = require("./data/geoMSOA_onested.json"); 
 var oLookUps = require("./data/LAtoMSOAdictionary.json");
 var oMSOAData = require("./data/MSOA_object.json");
-var oSchoolsData = require("./data/objSchools.json");
+var oSchoolsData = require("./data/objSchools_basic_info.json");
+var oExtendedSchoolsData = require("./data/objSchools_extended_info.json");
 
 app.set("views", __dirname + "/views");
 app.set("view engine","jade");
@@ -84,7 +85,7 @@ app.get('/references', function(req, res){
 app.get("/marker/:schID", function(req, res) {
 	var schID = req.params["schID"];
 	
-	res.json(oSchoolsData[schID]);
+	res.json(oExtendedSchoolsData[schID]);
 })
 
 app.get("/MSOA_map/:idLA/", function(req, res){
@@ -96,7 +97,7 @@ app.get("/MSOA_map/:idLA/", function(req, res){
 
 app.get('/', function(req, res){
 	//var parsedSchoolsData = JSON.parse(oSchoolsData);
-	createBuckets(oSchoolsData);
+	createBuckets(oExtendedSchoolsData);
 	
     res.render('index', {
                         title: "Housing"

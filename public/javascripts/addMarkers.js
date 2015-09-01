@@ -63,20 +63,22 @@ function createSchoolMarkers(map, indexSelected) {
 function createFastfoodMarkers(schID, map) {
     map.ffMarkers = [];
     var aFastfoodLatLong = [];
-    var aSchoolID = oSchoolsData[schID]["nearby_fastfoods"];
+        $.ajax("/marker/" + schID).done(function (res) {
+            var aSchoolID = res["nearby_fastfoods"];
 
-    for (var a = 0; a < aSchoolID.length; a++ ) {
-        var ffID = aSchoolID[a]["_id"];
-        if (aSchoolID[a].geoCode.mDistance2school < 1000) {
-            var address = {};
-            address.lat = aSchoolID[a].geoCode.lat;
-            address.lng = aSchoolID[a].geoCode.lng;
-            address.ffID = ffID;
+            for (var a = 0; a < aSchoolID.length; a++) {
+                var ffID = aSchoolID[a]["_id"];
+                if (aSchoolID[a].geoCode.mDistance2school < 1000) {
+                    var address = {};
+                    address.lat = aSchoolID[a].geoCode.lat;
+                    address.lng = aSchoolID[a].geoCode.lng;
+                    address.ffID = ffID;
 
-            aFastfoodLatLong.push(address);
-        }
-    }
-    drop(map, aFastfoodLatLong);
+                    aFastfoodLatLong.push(address);
+                }
+            }
+            drop(map, aFastfoodLatLong);
+        });
 }
 
 
